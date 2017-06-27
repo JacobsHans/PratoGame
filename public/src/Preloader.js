@@ -17,6 +17,7 @@ class Preloader {
         this.load.image('a', 'img/RobbyAntenna.png')
         this.load.image('robbyeyeleft', 'img/RobbyEyeLeft.png')
         this.load.image('robbyeyeright', 'img/RobbyEyeRight.png')
+        this.load.image('robbyhulk', 'img/Robby_Hulk.png')
         this.load.image('exit', 'img/Exit.png')
         this.load.image('badrobot', 'img/BadRobot.png')
         this.load.audio('theme', 'audio/Theme.ogg')

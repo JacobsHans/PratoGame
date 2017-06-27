@@ -263,6 +263,7 @@ INVOKE THE HELP FUNCTION IF YOU NEED A HAND\n\
             case 'a':
             case 'robbyeyeleft':
             case 'robbyeyeright':
+            case 'robbyhulk':
                 return this.robbyGroup
         }
     }

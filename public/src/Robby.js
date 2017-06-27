@@ -1,16 +1,14 @@
-class Robby {
+class Robby extends Entity {
     constructor() {
+        super()
         this.windingKey = new WindingKey()
         this.navigation = new Navigation()
         this.lPosition = { x: 140, y: 58 }
         this.rPosition = { x: -140, y: 58 }
         this.aPosition = { x: 0, y: -195 }
-        this.game
-        this.sprite
-        this.emitter0
-        this.emitter1
         this.leftEye
         this.rightEye
+        this.numberOfPokes = 0
     }
     init(game) {
         this.game = game
@@ -72,10 +70,6 @@ class Robby {
             && gridGenerator.levelGrid[position.x + diffX][position.y + diffY]
             && ['-', '|'].includes(gridGenerator.levelGrid[position.x + diffX][position.y + diffY])
     }
-    doABarrelRoll() {
-        const barrelRoll = this.game.add.tween(this.sprite).to({ angle: 359 }, 250, Phaser.Easing.Linear.None, true)
-        barrelRoll.onComplete.add(() => { this.sprite.angle = 0 }, this)
-    }
     attach(part) {
         if (!part.isAttachable) return 'Can only attach Attachables'
         const myPosition = gridGenerator.convertPixelsToGrid(this.sprite.x, this.sprite.y)
@@ -108,6 +102,22 @@ class Robby {
         if (!childrenSpriteKeys.includes('r')) return false
         if (!childrenSpriteKeys.includes('a')) return false
         return true
+    }
+    poke() {
+        this.numberOfPokes++;
+        if (this.numberOfPokes === 1) return 'Ouch!'
+        if (this.numberOfPokes === 2) return 'You\'re making me angry...'
+        if (this.numberOfPokes === 3) return 'You wouldn\'t like me when I\'m angry'
+        if (this.numberOfPokes === 4) this.sprite = this.game.addTweenedSprite('robbyhulk', this.sprite.position.x, this.sprite.position.y, 1000, 0.3)
+        return 'WRRAAAAAAAAAAHHHHHHH!!!!'
+    }
+    drinkACupOfTea() {
+        if(this.numberOfPokes > 0)
+        {
+            this.numberOfPokes = 0;
+            this.sprite = this.game.addTweenedSprite('robby', this.sprite.position.x, this.sprite.position.y, 1000, 0.3)
+        }
+        return 'That\'s better...'
     }
 }
 
