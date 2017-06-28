@@ -1,8 +1,6 @@
-class Enemy {
+class Enemy extends Entity {
     constructor() {
-        this.game
-        this.sprite
-        this.emitter0
+        super()
         this.goingBack
         this.horizontal
     }

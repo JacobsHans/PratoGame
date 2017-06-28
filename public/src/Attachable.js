@@ -7,16 +7,17 @@ class Magnet {
         return 'Magnet activated!'
     }
 }
-class Attachable {
+class Attachable extends Entity {
     constructor(element, name) {
+        super()
         this.isAttachable = true
         this.magnet = new Magnet()
         this.element = element
-        this.sprite
         this.text
         this.name = name
     }
     init(game) {
+        this.game = game
         const position = gridGenerator.getPositionOfElementInPixels(this.element)
         this.sprite = game.addTweenedSprite(this.element, position.x, position.y, 1000, 0.3)
 
