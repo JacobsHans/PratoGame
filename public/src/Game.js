@@ -14,6 +14,7 @@ INVOKE THE HELP FUNCTION IF YOU NEED A HAND\n\
         this.exitGroup
         this.robbyGroup
         this.badrobotGroup
+        this.speedRun
     }
     init(isNotFirstRun) {
         this.isNotFirstRun = isNotFirstRun
@@ -58,8 +59,12 @@ INVOKE THE HELP FUNCTION IF YOU NEED A HAND\n\
         this.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(this.pressDownArrow, this)
         this.input.keyboard.addKey(Phaser.Keyboard.LEFT).onDown.add(this.pressLeftArrow, this)
         this.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(this.pressUpArrow, this)
+        this.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.toggleSpeedRun, this)
 
         this.history.setValue(this.startText)
+
+        
+        speedRun.init(this)
     }
     update() {
         this.rollEyes()
@@ -222,6 +227,9 @@ INVOKE THE HELP FUNCTION IF YOU NEED A HAND\n\
         if (this.editor.hasFocus()) return;
         this.editor.setValue('robby.goLeft()')
         this.enterKeyDown()
+    }
+    toggleSpeedRun() {
+        speedRun.toggle()
     }
     addTweenedSprite(spriteName, positionX, positionY, delay, endScale) {
         const sprite = this.getGroupBySpriteName(spriteName).create(positionX, positionY, spriteName)
