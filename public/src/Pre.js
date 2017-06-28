@@ -14,7 +14,9 @@
     startLoop() {
         this.add.audio('loop').loopFull()
     }
-
+    stopAudio() {
+        this.sound.stopAll()
+    }
 }
 
 Prato.Pre = new Pre()

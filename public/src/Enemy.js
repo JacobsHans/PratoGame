@@ -119,6 +119,12 @@ class Enemy {
 
         return !verticalNeighbours.includes("|")
     }
+
+    launchIntoSpace() {
+        this.go(0, -10);
+        this.isActive = false;
+        return "Houston we have a problem!!";
+    }
 }
 
 const enemy = new Enemy()

@@ -41,10 +41,10 @@ class Robby {
         this.sprite.addChild(this.leftEye)
         this.sprite.addChild(this.rightEye)
     }
-    go() {
+    go(jump = false) {
         if (!this.windingKey.windCalled) return 'Robby cannot go without winding the windingKey!'
         if (!this.navigation.setNavigationCalled) return 'Robby cannot go without setting the navigation!'
-        if (!this.canYouGoThere(this.navigation.x, this.navigation.y)) return 'I cannot go there!'
+        if (!this.canYouGoThere(this.navigation.x, this.navigation.y, jump)) return 'I cannot go there!'
         this.windingKey.windCalled = false
         this.navigation.setNavigationCalled = false
         const robbyPosition = gridGenerator.convertPixelsToGrid(this.sprite.x, this.sprite.y)
@@ -66,8 +66,12 @@ class Robby {
         if (problem) return problem
         return 'GOING!'
     }
-    canYouGoThere(diffX, diffY) {
+    canYouGoThere(diffX, diffY, jump) {
         const position = gridGenerator.convertPixelsToGrid(this.sprite.x, this.sprite.y)
+        if (jump) {
+            return gridGenerator.levelGrid[position.x + diffX]
+            && gridGenerator.levelGrid[position.x + diffX][position.y + diffY]
+        }
         return gridGenerator.levelGrid[position.x + diffX]
             && gridGenerator.levelGrid[position.x + diffX][position.y + diffY]
             && ['-', '|'].includes(gridGenerator.levelGrid[position.x + diffX][position.y + diffY])
@@ -89,7 +93,12 @@ class Robby {
         this.game.add.tween(part.sprite).to({ x: this[part.element + 'Position'].x, y: this[part.element + 'Position'].y }, 250, Phaser.Easing.Linear.In, true)
         this.game.add.tween(part.sprite).to({ angle: Math.random() >= 0.5 ? 720 : -720 }, 250, Phaser.Easing.Linear.In, true)
         this.game.add.audio('attach').play()
-        return 'Attachment successful'
+        if (part.element == 'a') {
+            return 'You now have access to the internet!'  // Easter egg
+        }
+        else {
+            return 'Attachment successful'
+        }
     }
     checkIfYoureThere() {
         const exitPosition = gridGenerator.getPositionOfElementInGrid('e')
@@ -108,6 +117,17 @@ class Robby {
         if (!childrenSpriteKeys.includes('r')) return false
         if (!childrenSpriteKeys.includes('a')) return false
         return true
+    }
+    shutUp() {
+        Prato.Pre.stopAudio()
+        return "Ahh, peace and quiet..."
+    }
+    jumpRight(){
+        this.windingKey.wind()
+        this.navigation.setNavigation(1, 0)
+        const problem = this.go(true)
+        if (problem) return problem
+        return 'GOING!'
     }
 }
 
