@@ -1,9 +1,16 @@
+
 class GridGenerator {
     constructor() {
         this.levelGrid
         this.gridRadius
         this.game
         this.levelString
+    }
+    getRows() {
+        return this.levelGrid[0].length
+    }
+    getColumns() {
+        return this.levelGrid.length
     }
     createGrid() {
         this.levelString = !this.game.isNotFirstRun ? this.getLevelString() : new RandomGridGenerator().generate()
@@ -24,8 +31,8 @@ class GridGenerator {
     setupGrid(game) {
         this.game = game
         this.levelGrid = this.createGrid()
-        const rows = this.levelGrid[0].length
-        const columns = this.levelGrid.length
+        const rows = this.getRows()
+        const columns = this.getColumns()
         this.gridRadius = this.calculateGridRadius(game, rows, columns)
         const offset = 90
 
